@@ -34,12 +34,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tkattkat/google-search-ts.git"
+    "url": "git+https://github.com/tkattkat/google-search-scraper.git"
   },
   "bugs": {
-    "url": "https://github.com/tkattkat/google-search-ts/issues"
+    "url": "https://github.com/tkattkat/google-search-scraper/issues"
   },
-  "homepage": "https://github.com/tkattkat/google-search-ts#readme",
+  "homepage": "https://github.com/tkattkat/google-search-scraper#readme",
   "files": [
     "dist",
     "README.md",

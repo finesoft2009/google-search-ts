@@ -1,6 +1,6 @@
 {
   "name": "google-search-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A TypeScript library for performing Google searches with support for proxy, pagination, and customization",
   "main": "dist/googleSearch.js",
   "types": "dist/googleSearch.d.ts",

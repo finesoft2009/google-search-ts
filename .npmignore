@@ -1,0 +1,28 @@
+# Source
+src/
+tests/
+examples/
+
+# TypeScript config
+tsconfig.json
+
+# Development files
+.git/
+.gitignore
+.npmrc
+.eslintrc
+.prettierrc
+*.log
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+
+# Test files
+*.spec.ts
+*.test.ts 

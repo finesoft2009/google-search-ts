@@ -1,0 +1,14 @@
+{
+  "name": "google-search-ts-examples",
+  "version": "1.0.0",
+  "description": "Примеры использования библиотеки Google Search Scraper",
+  "private": true,
+  "scripts": {
+    "example:basic": "ts-node examples/basic-example.ts",
+    "example:advanced": "ts-node examples/advanced-example.ts",
+    "examples": "echo 'Доступные примеры: basic, advanced. Используйте npm run example:[название]'"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}

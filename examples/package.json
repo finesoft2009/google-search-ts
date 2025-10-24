@@ -6,7 +6,9 @@
   "scripts": {
     "example:basic": "ts-node examples/basic-example.ts",
     "example:advanced": "ts-node examples/advanced-example.ts",
-    "examples": "echo 'Доступные примеры: basic, advanced. Используйте npm run example:[название]'"
+    "example:working": "ts-node examples/working-example.ts",
+    "example:best-practices": "ts-node examples/best-practices-example.ts",
+    "examples": "echo 'Доступные примеры: basic, advanced, working, best-practices. Используйте npm run example:[название]'"
   },
   "devDependencies": {
     "ts-node": "^10.9.2"

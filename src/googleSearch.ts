@@ -2,25 +2,25 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 
 interface SearchOptions {
-    numResults?: number;
-    lang?: string;
-    proxy?: string;
-    timeout?: number;
-    safe?: 'active' | 'off';
-    region?: string;
-    start?: number;
-    unique?: boolean;
+    numResults?: number;      // Количество результатов
+    lang?: string;            // Язык
+    proxy?: string;           // Прокси
+    timeout?: number;         // Таймаут
+    safe?: 'active' | 'off';  // Безопасный поиск
+    region?: string;          // Регион
+    start?: number;           // Стартовая позиция
+    unique?: boolean;         // Уникальные результаты
 }
 
 interface SearchResult {
-    url: string;
-    title: string;
-    description: string;
+    url: string;              // URL результата
+    title: string;            // Заголовок результата
+    description: string;      // Описание результата
 }
 
 class GoogleSearch {
     private static getRandomUserAgent(): string {
-        
+        // Генерация случайного User-Agent
         const lynxVersion = `Lynx/${2 + Math.floor(Math.random() * 2)}.${8 + Math.floor(Math.random() * 2)}.${Math.floor(Math.random() * 3)}`;
         const libwwwVersion = `libwww-FM/${2 + Math.floor(Math.random() * 2)}.${13 + Math.floor(Math.random() * 3)}`;
         const sslMmVersion = `SSL-MM/${1 + Math.floor(Math.random())}.${3 + Math.floor(Math.random() * 3)}`;
@@ -29,8 +29,8 @@ class GoogleSearch {
     }
 
     private static async makeRequest(
-        term: string,
-        options: SearchOptions = {}
+        term: string,        // Поисковый запрос
+        options: SearchOptions = {}  // Опции поиска
     ): Promise<string> {
         const {
             numResults = 10,
@@ -45,11 +45,11 @@ class GoogleSearch {
         const url = 'https://www.google.com/search';
         const params = new URLSearchParams({
             q: term,
-            num: (numResults + 2).toString(), 
+            num: (numResults + 2).toString(),  // Запрашиваем немного больше результатов, чтобы компенсировать фильтрацию
             hl: lang,
             start: start.toString(),
             safe: safe,
-            ...(region && { gl: region }),
+            ...(region && { gl: region }),  // Добавляем параметр региона, если указан
         });
 
         const headers = {
@@ -78,7 +78,7 @@ class GoogleSearch {
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                throw new Error(`Google search request failed: ${error.message}`);
+                throw new Error(`Запрос поиска в Google не удался: ${error.message}`);
             }
             throw error;
         }
@@ -90,13 +90,15 @@ class GoogleSearch {
         const seenUrls = new Set<string>();
 
      
-        console.log('First 1000 characters of HTML:', html.substring(0, 1000));
+        // Удалить отладочные сообщения перед продакшеном
+        // console.log('First 1000 characters of HTML:', html.substring(0, 1000));
         
       
         const resultBlocks = $('div.g, div.ezO2md, div.MjjYud');
 
         resultBlocks.each((_, element) => {
-            console.log('Processing result block:', $(element).html());
+            // Удалить отладочные сообщения перед продакшеном
+            // console.log('Processing result block:', $(element).html());
             const linkElement = $(element).find('a[href]').first();
             const titleElement = $(element).find('h3, span.CVA68e').first();
             const descriptionElement = $(element).find('div.VwiC3b, span.FrIlee, div.s').first();
@@ -129,8 +131,8 @@ class GoogleSearch {
     }
 
     public static async search(
-        term: string,
-        options: SearchOptions = {}
+        term: string,         // Поисковый запрос
+        options: SearchOptions = {}  // Опции поиска
     ): Promise<SearchResult[]> {
         const html = await GoogleSearch.makeRequest(term, options);
         return GoogleSearch.parseResults(html, options.unique);

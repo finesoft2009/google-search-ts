@@ -2,18 +2,18 @@ import { GoogleSearch } from './googleSearch';
 
 async function test() {
     try {
-        // Basic search with default options
+        // Базовый поиск с опциями по умолчанию
         const results = await GoogleSearch.search('TypeScript programming', {
             numResults: 10,
             lang: 'en',
             safe: 'active',
-            unique: true  // Only get unique results
+            unique: true  // Получать только уникальные результаты
         });
 
-        console.log('Results:\n');
+        console.log('Результаты:\n');
         console.log(results);
     } catch (error) {
-        console.error('Search failed:', error);
+        console.error('Поиск не удался:', error);
     }
 }
 

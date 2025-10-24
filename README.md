@@ -1,67 +1,67 @@
 # google-search-ts
 
-A TypeScript library for performing Google searches with support for proxy, pagination, and customization.
+TypeScript библиотека для выполнения Google поиска с поддержкой прокси, пагинации и настройки параметров.
 
-## Installation
+## Установка
 
 ```bash
 npm install google-search-ts
 ```
 
-## Usage
+## Использование
 
 ```typescript
 import { GoogleSearch, SearchOptions } from 'google-search-ts';
 
-// Basic search
+// Базовый поиск
 const results = await GoogleSearch.search('nodejs typescript');
 
-// Search with options
+// Поиск с опциями
 const options: SearchOptions = {
-    numResults: 20,        // Number of results to return
-    lang: 'en',           // Language for search results
-    safe: 'active',       // SafeSearch setting ('active' or 'off')
-    region: 'US',         // Region for search results
-    start: 0,             // Starting position for pagination
-    unique: true,         // Remove duplicate URLs
-    proxy: 'http://proxy.example.com:8080',  // Optional proxy
-    timeout: 5000         // Request timeout in milliseconds
+    numResults: 20,        // Количество возвращаемых результатов
+    lang: 'en',           // Язык результатов поиска
+    safe: 'active',       // Настройки безопасного поиска ('active' или 'off')
+    region: 'US',         // Регион для результатов поиска
+    start: 0,             // Начальная позиция для пагинации
+    unique: true,         // Удалить дубликаты URL
+    proxy: 'http://proxy.example.com:8080',  // Опциональный прокси
+    timeout: 5000         // Таймаут запроса в миллисекундах
 };
 
 const resultsWithOptions = await GoogleSearch.search('nodejs typescript', options);
 
-// Each result contains:
+// Каждый результат содержит:
 // {
-//     url: string;        // The URL of the search result
-//     title: string;      // The title of the search result
-//     description: string; // The description/snippet of the search result
+//     url: string;        // URL результата поиска
+//     title: string;      // Заголовок результата поиска
+//     description: string; // Описание/отрывок результата поиска
 // }
 ```
 
-## Examples
+## Примеры
 
-### Basic Search
+### Базовый поиск
 ```typescript
 import { GoogleSearch } from 'google-search-ts';
 
 async function basicSearch() {
     try {
         const results = await GoogleSearch.search('nodejs typescript');
-        console.log(`Found ${results.length} results`);
+        console.log(`Найдено ${results.length} результатов`);
         
-        // Print the first result
-        console.log('First result:', {
+        // Вывести первый результат
+        console.log('Первый результат:', {
             title: results[0].title,
             url: results[0].url,
             description: results[0].description
         });
     } catch (error) {
-        console.error('Search failed:', error.message);
+        console.error('Поиск не удался:', error.message);
     }
 }
 ```
 
-### Pagination
+### Пагинация
 ```typescript
 import { GoogleSearch } from 'google-search-ts';
 
@@ -70,55 +70,55 @@ async function paginatedSearch() {
     const resultsPerPage = 10;
     
     try {
-        // Get first page
+        // Получить первую страницу
         const page1 = await GoogleSearch.search(query, {
             numResults: resultsPerPage,
             start: 0
         });
         
-        // Get second page
+        // Получить вторую страницу
         const page2 = await GoogleSearch.search(query, {
             numResults: resultsPerPage,
             start: resultsPerPage
         });
         
         const allResults = [...page1, ...page2];
-        console.log(`Total results: ${allResults.length}`);
+        console.log(`Всего результатов: ${allResults.length}`);
     } catch (error) {
-        console.error('Paginated search failed:', error.message);
+        console.error('Пагинированный поиск не удался:', error.message);
     }
 }
 ```
 
-### Language and Region-Specific Search
+### Поиск с учетом языка и региона
 ```typescript
 import { GoogleSearch } from 'google-search-ts';
 
 async function localizedSearch() {
     try {
-        // Search in French, restricted to France
+        // Поиск на французском, ограниченный Францией
         const frenchResults = await GoogleSearch.search('développeur web', {
             lang: 'fr',
             region: 'FR',
             numResults: 10
         });
         
-        // Search in German, restricted to Germany
+        // Поиск на немецком, ограниченный Германией
         const germanResults = await GoogleSearch.search('webentwickler', {
             lang: 'de',
             region: 'DE',
             numResults: 10
         });
         
-        console.log('French results:', frenchResults.length);
-        console.log('German results:', germanResults.length);
+        console.log('Французские результаты:', frenchResults.length);
+        console.log('Немецкие результаты:', germanResults.length);
     } catch (error) {
-        console.error('Localized search failed:', error.message);
+        console.error('Локализованный поиск не удался:', error.message);
     }
 }
 ```
 
-### Using a Proxy
+### Использование прокси
 ```typescript
 import { GoogleSearch } from 'google-search-ts';
 
@@ -126,18 +126,18 @@ async function searchWithProxy() {
     try {
         const results = await GoogleSearch.search('programming jobs', {
             proxy: 'http://your-proxy-server:8080',
-            timeout: 10000,  // Increased timeout for proxy
+            timeout: 10000,  // Увеличенный таймаут для прокси
             numResults: 15
         });
         
-        console.log(`Found ${results.length} job listings`);
+        console.log(`Найдено ${results.length} вакансий`);
     } catch (error) {
-        console.error('Proxy search failed:', error.message);
+        console.error('Поиск с прокси не удался:', error.message);
     }
 }
 ```
 
-### Error Handling
+### Обработка ошибок
 ```typescript
 import { GoogleSearch } from 'google-search-ts';
 
@@ -145,62 +145,62 @@ async function robustSearch() {
     try {
         const results = await GoogleSearch.search('typescript examples', {
             numResults: 20,
-            unique: true  // Remove duplicate URLs
+            unique: true  // Удалить дубликаты URL
         });
         
         if (results.length === 0) {
-            console.log('No results found');
+            console.log('Результаты не найдены');
             return;
         }
         
-        // Process results
+        // Обработка результатов
         results.forEach((result, index) => {
             console.log(`${index + 1}. ${result.title}`);
             console.log(`   URL: ${result.url}`);
-            console.log(`   Description: ${result.description}\n`);
+            console.log(`   Описание: ${result.description}\n`);
         });
         
     } catch (error) {
         if (error.message.includes('timeout')) {
-            console.error('Search timed out. Try increasing the timeout value.');
+            console.error('Поиск превысил время ожидания. Попробуйте увеличить значение таймаута.');
         } else if (error.message.includes('proxy')) {
-            console.error('Proxy error. Check your proxy configuration.');
+            console.error('Ошибка прокси. Проверьте настройки прокси.');
         } else {
-            console.error('Search failed:', error.message);
+            console.error('Поиск не удался:', error.message);
         }
     }
 }
 ```
 
-## Features
+## Особенности
 
-- 🔍 Perform Google searches programmatically
-- 🌍 Support for different languages and regions
-- 🔐 SafeSearch support
-- 📄 Pagination support
-- 🔄 Proxy support
-- 🎯 Customizable number of results
-- 🚫 Duplicate URL filtering
-- ⏱️ Configurable timeout
-- 📝 TypeScript type definitions included
+- 🔍 Выполнение Google поиска программно
+- 🌍 Поддержка разных языков и регионов
+- 🔐 Поддержка безопасного поиска
+- 📄 Поддержка пагинации
+- 🔄 Поддержка прокси
+- 🎯 Настраиваемое количество результатов
+- 🚫 Фильтрация дубликатов URL
+- ⏱️ Настраиваемый таймаут
+- 📝 Включены определения типов TypeScript
 
-## Options
+## Опции
 
-| Option | Type | Default | Description |
+| Опция | Тип | По умолчанию | Описание |
 |--------|------|---------|-------------|
-| numResults | number | 10 | Number of results to return |
-| lang | string | 'en' | Language for search results |
-| proxy | string | undefined | Proxy URL (e.g., 'http://proxy.example.com:8080') |
-| timeout | number | 5000 | Request timeout in milliseconds |
-| safe | 'active' \| 'off' | 'active' | SafeSearch setting |
-| region | string | undefined | Region for search results |
-| start | number | 0 | Starting position for pagination |
-| unique | boolean | false | Remove duplicate URLs from results |
+| numResults | number | 10 | Количество возвращаемых результатов |
+| lang | string | 'en' | Язык для результатов поиска |
+| proxy | string | undefined | URL прокси (например, 'http://proxy.example.com:8080') |
+| timeout | number | 5000 | Таймаут запроса в миллисекундах |
+| safe | 'active' \| 'off' | 'active' | Настройки безопасного поиска |
+| region | string | undefined | Регион для результатов поиска |
+| start | number | 0 | Начальная позиция для пагинации |
+| unique | boolean | false | Удалить дубликаты URL из результатов |
 
-## License
+## Лицензия
 
 MIT
 
-## Contributing
+## Участие в разработке
 
-Contributions are welcome! Please feel free to submit a Pull Request to the [GitHub repository](https://github.com/tkattkat/google-search-ts). 
+Вклады приветствуются! Пожалуйста, не стесняйтесь отправлять Pull Request в [репозиторий GitHub](https://github.com/tkattkat/google-search-ts).
